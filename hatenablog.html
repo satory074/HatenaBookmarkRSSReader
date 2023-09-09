@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>はてなブックマーク RSS</title>
+  <script>
+    // GASからデータを取得する関数
+    async function fetchData() {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbxZwk1A7pq_2NTKTtd5WvZKsl5AlYsgKF8wNTzwAZSlxltaSZ6GZoH591Kqmdvr1yeBCQ/exec?user=satory074'); // ご自身のGASの公開URLを指定してください。
+      const data = await response.json();
+
+      const container = document.getElementById('rss-container');
+      data.forEach(item => {
+        const titleElement = document.createElement('a');
+        titleElement.href = item.link;
+        titleElement.innerText = item.title;
+
+        const encodedElement = document.createElement('div');
+        encodedElement.innerHTML = item.encodedContent;  // innerHTMLを使用
+
+        const hrElement = document.createElement('hr');  // <hr> element
+        
+        // container.appendChild(titleElement);
+        container.appendChild(encodedElement);
+        container.appendChild(hrElement);
+      });
+    }
+  </script>
+</head>
+<body onload="fetchData()">
+  <div id="rss-container">
+    <!-- RSSデータがここに挿入されます -->
+  </div>
+</body>
+</html>
